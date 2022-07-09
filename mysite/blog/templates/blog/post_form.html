@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% if form.instance.pk %}
+Edit Post
+{% else %}
+New Post
+{% endif %}
+{% endblock title %}
+
+{% block content %}
+
+<div class="content">
+    <form method="POST">
+        <div class="form-title">
+            <h2>
+                {% if form.instance.pk %}
+                Edit Post
+                {% else %}
+                Update Post
+                {% endif %}
+            </h2>
+        </div>
+        <div class="form-content">
+            <div class="form-input">
+                <label for="{{form.title.id_for_lable}}">Enter Title</label>
+                {{form.title}}
+            </div>
+            <div class="form-input">
+                <label for="{{form.content.id_for_lable}}">Enter Content</label>
+                {{form.content}}
+            </div>
+            {% csrf_token %}
+            <input type="submit" value="Save" class="btn btn-view">
+        </div>
+    </form>
+</div>
+<script>
+
+</script>
+{% endblock content %}

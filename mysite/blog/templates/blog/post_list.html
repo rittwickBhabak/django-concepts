@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}All Posts{% endblock title %}
+
+{% block content %}
+
+<div class="content">
+    {% for post in post_list%}
+        <div class="post-card">
+            <h2 class="post-title">{{post.title}}</h2>
+            <div class="post-content">{{post.content|truncatechars:"30"}}</div>
+            <div class="links">
+                <a href="{% url 'blog:view' post.slug %}" class="btn btn-view">Read</a>
+                <a href="{% url 'blog:edit' post.slug %}" class="btn btn-edit">Update</a>
+                <a href="{% url 'blog:remove' post.slug %}" class="btn btn-remove">Delete</a>
+            </div>
+        </div>
+    {% empty %}
+        <div class="post-card">
+            <h2 class="post-title">No Posts Available</h2>
+            <div class="post-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere temporibus hic tempora eos vel at quo sapiente asperiores officia quis dolorum mollitia pariatur consectetur, ducimus repudiandae autem, modi dolores eius.</div>
+            <button class="btn btn-view">Add</button>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}
