@@ -1,10 +1,12 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+from taggit.managers import TaggableManager
 
 class Post(models.Model):
     title = models.CharField(max_length=300)
     slug = models.SlugField(unique=True, blank=True, null=True)
+    tags = TaggableManager()
     content = models.TextField() 
 
     def save(self, *args, **kwargs):
