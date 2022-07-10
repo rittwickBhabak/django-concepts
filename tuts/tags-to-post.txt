@@ -1,0 +1,47 @@
+# pip install django-taggit
+ADD 'taggit' IN SETTINGS.PY, IN INSTALLED APPS LIST
+===========================
+========= models.py ==========
+===========================
+from django.urls import reverse
+from django.utils.text import slugify
+from taggit.managers import TaggableManager
+# .....
+class MyMode(models.Model):
+    # ....
+    slug = models.SlugField(unique=True)
+    tags = TaggableManager()
+    def get_absolute_url(self):
+        return reverse("posts:view-post", kwargs={"slug": self.slug})
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+    #.....
+
+===========================
+====== model_list.html==========
+===========================
+<span class="mx-1">
+    <a href="{% url 'posts:tag' tag %}">
+        {{tag}}
+    </a>
+</span>
+
+===========================
+========== url.py =============
+===========================
+from django.urls import path
+from . import views
+
+app_name = 'posts'
+
+urlpatterns = [
+   #.......
+    path('tag/<str:tag>', views.tagged_posts, name='tag'),
+]
+
+=================================
+============= views.py ==============
+=================================
+Food.objects.filter(tags__name__in=["red"])
